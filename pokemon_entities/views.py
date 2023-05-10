@@ -1,6 +1,5 @@
 from django.utils import timezone
 import folium
-import json
 
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
@@ -22,33 +21,13 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
     )
     folium.Marker(
         [lat, lon],
-        # Warning! `tooltip` attribute is disabled intentionally
-        # to fix strange folium cyrillic encoding bug
         icon=icon,
     ).add_to(folium_map)
 
 
 def show_all_pokemons(request):
-    # with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
-    #     pokemons = json.load(database)['pokemons']
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-
-    # for pokemon in pokemons:
-    #     for pokemon_entity in pokemon['entities']:
-    #         add_pokemon(
-    #             folium_map, pokemon_entity['lat'],
-    #             pokemon_entity['lon'],
-    #             pokemon['img_url']
-    #         )
-
-    # pokemons_on_page = []
-    # for pokemon in pokemons:
-    #     pokemons_on_page.append({
-    #         'pokemon_id': pokemon['pokemon_id'],
-    #         'img_url': pokemon['img_url'],
-    #         'title_ru': pokemon['title_ru'],
-    #     })
 
     current_time = timezone.localtime()
     pokemonentities = PokemonEntity.objects.filter(disappeared_at__gte=current_time, appeared_at__lte=current_time)
@@ -75,15 +54,6 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    # with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
-    #     pokemons = json.load(database)['pokemons']
-
-    # for pokemon in pokemons:
-    #     if pokemon['pokemon_id'] == int(pokemon_id):
-    #         requested_pokemon = pokemon
-    #         break
-    # else:
-    #     return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
 
     try:
         requested_pokemon = Pokemon.objects.get(id=pokemon_id)
@@ -115,13 +85,6 @@ def show_pokemon(request, pokemon_id):
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
-    # for pokemon_entity in requested_pokemon['entities']:
-    #     add_pokemon(
-    #         folium_map, pokemon_entity['lat'],
-    #         pokemon_entity['lon'],
-    #         pokemon['img_url']
-    #     )
-    
     for pokemon_entity in PokemonEntity.objects.filter(pokemon=requested_pokemon):
         add_pokemon(
             folium_map, pokemon_entity.lat,
