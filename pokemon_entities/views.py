@@ -97,6 +97,15 @@ def show_pokemon(request, pokemon_id):
             'description': requested_pokemon.description,
             'img_url': request.build_absolute_uri(requested_pokemon.photo.url),
             }
+   
+    next_evolution = requested_pokemon.pokemon_set.all().first()
+    if next_evolution:
+        pokemon ['next_evolution'] = {
+            'title_ru': next_evolution.title,
+            'pokemon_id': next_evolution.id,
+            'img_url': request.build_absolute_uri(next_evolution.photo.url)
+            }
+
     if requested_pokemon.parent:
         pokemon ['previous_evolution'] = {
             'title_ru': requested_pokemon.parent.title,
