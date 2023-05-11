@@ -9,7 +9,7 @@ class Pokemon(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name='Описание')
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, verbose_name='Родительский покемон')
     def __str__(self):
-        return f'{self.title}'
+        return self.title
     class Meta:
         verbose_name_plural = 'Покемоны'    
         verbose_name = 'Покемоны'    
