@@ -34,6 +34,7 @@ class Pokemon(models.Model):
         null=True,
         blank=True,
         verbose_name="Родительский покемон",
+        related_name="parent_pokemon"
     )
 
     def __str__(self):
@@ -46,8 +47,12 @@ class Pokemon(models.Model):
 
 class PokemonEntity(models.Model):
     pokemon = models.ForeignKey(
-        Pokemon, on_delete=models.CASCADE, verbose_name="Покемон"
+        Pokemon, 
+        on_delete=models.CASCADE, 
+        verbose_name="Покемон",
+        related_name="pokemon"
     )
+
     lat = models.FloatField(verbose_name="Широта")
     lon = models.FloatField(verbose_name="Долгота")
     appeared_at = models.DateTimeField(verbose_name="Появился в")
