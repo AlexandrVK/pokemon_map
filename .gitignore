@@ -92,3 +92,4 @@ Scripts
 pyvenv.cfg
 pokemon_entities/pokemons.json
 Include
+.vscode/settings.json
