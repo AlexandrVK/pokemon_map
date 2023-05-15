@@ -32,8 +32,8 @@ class Pokemon(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        verbose_name="Родительский покемон",
-        related_name="parent_pokemon"
+        verbose_name="Покемон -  предок",
+        related_name="ancestor_pokemon"
     )
 
     class Meta:
