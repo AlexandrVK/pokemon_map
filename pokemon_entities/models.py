@@ -33,7 +33,7 @@ class Pokemon(models.Model):
         null=True,
         blank=True,
         verbose_name="Из кого развился покемон",
-        related_name="evolved_from_pokemon"
+        related_name="evolved_from"
     )
 
     class Meta:
